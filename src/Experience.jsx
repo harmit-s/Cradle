@@ -1,5 +1,6 @@
-import { Level1 } from './Level1.jsx'
+
 import { Physics } from '@react-three/rapier'
+import Level1 from './Level1'
 
 export default function Experience() {
 
