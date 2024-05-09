@@ -1,12 +1,18 @@
 import { Environment, MeshReflectorMaterial, Float, Text, OrbitControls } from '@react-three/drei'
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import { RigidBody } from '@react-three/rapier'
+import { useHistory } from'react-router-dom';
 
 
 export default function Level1() {
     const [showCubes, setShowCubes] = useState(Array(10).fill(true));
     const [score, setScore] = useState(5000);
+    const [isLevelComplete, setIsLevelComplete] = useState(false);
     const redCube = useRef()
+    const blackCube = useRef()
+    const blackCube2 = useRef();
+    const plane = useRef()
+    const history = useHistory();
 
     const cubePositions = [
         [0, 4, 0],
@@ -14,6 +20,32 @@ export default function Level1() {
         [-4, 1, 0], [0, 1, 0], [4, 1, 0],
         [-6, 0, 0], [-2, 0, 0], [2, 0, 0], [6, 0, 0],
     ];
+
+    useEffect(() => {
+        const checkCompletion = () => {
+            const redCubePosition = redCube.current.position;
+            const blackCubePosition = blackCube.current.position;
+            const blackCube2Position = blackCube2.current.position; 
+            const planePosition = plane.current.position;
+
+            
+            if (
+                redCubePosition.y >= blackCubePosition.y &&
+                blackCubePosition.y >= planePosition.y &&
+                redCubePosition.y >= blackCube2Position.y 
+            ) {
+                
+                setIsLevelComplete(true);
+            }
+        };
+        const intervalId = setInterval(checkCompletion, 100); 
+
+        return () => clearInterval(intervalId);
+    }, []);
+
+    const handleNextLevel = () => {
+        history.push('/levels/2.jsx', { score: score });
+    };
 
     const handleCubeClick = (index) => {
         setShowCubes(prevState => {
@@ -33,6 +65,7 @@ export default function Level1() {
         });
         setScore(prevScore => prevScore - 300);
     };
+    
 
     return (
         <>
@@ -41,8 +74,7 @@ export default function Level1() {
                 files={'./environments/landscape.hdr'}
             />
 
-            <OrbitControls />
-            <ambientLight intensity={1.5} />
+            
 
             {showCubes.map((showCube, index) => (
                 showCube && (
@@ -62,21 +94,21 @@ export default function Level1() {
                 </mesh>
             </RigidBody>
 
-            <RigidBody >
+            <RigidBody ref={blackCube} >
                 <mesh castShadow position={[1, 3, 0]} >
                     <boxGeometry />
                     <meshStandardMaterial color="black" metalness={1} roughness={0.1} />
                 </mesh>
             </RigidBody>
 
-            <RigidBody >
+            <RigidBody ref={blackCube2} >
                 <mesh castShadow position={[-1, 3, 0]} >
                     <boxGeometry />
                     <meshStandardMaterial color="black" metalness={1} roughness={0.1} />
                 </mesh>
             </RigidBody>
 
-            <RigidBody type='fixed' restitution={0.5}>
+            <RigidBody ref={plane} type='fixed' restitution={0.5}>
                 <mesh position-y={-0.5} rotation-x={- Math.PI * 0.5} scale={20}>
                     <planeGeometry />
                     <MeshReflectorMaterial
@@ -111,6 +143,23 @@ export default function Level1() {
                     textAlign="right"
                 >Health Score: {score}  </Text>
             </Float>
+
+            {isLevelComplete && (
+                <Float
+                speed={4}
+                floatIntensity={3}
+                onClick={handleNextLevel}>
+                <Text
+                    font="./fonts/bangers-v20-latin-regular.woff"
+                    fontSize={3}
+                    color="red"
+                    position-y={16}
+                    position-x={0}
+                    textAlign="right"
+                >Level Complete: NEXT </Text>
+            </Float>
+                    
+            )}
         </>
     );
 }
