@@ -1,10 +1,10 @@
 import { Environment, MeshReflectorMaterial, Float, Text } from '@react-three/drei'
 import React, { useState, useRef } from 'react'
 import { RigidBody } from '@react-three/rapier'
-// import { useHistory } from 'react-router-dom';
+// import { useFrame } from '@react-three/fiber'
 
 
-export default function Level1() {
+export default function Level1({setLevel}) {
     const [showCubes, setShowCubes] = useState(Array(10).fill(true));
     const [score, setScore] = useState(5000);
     const [isLevelComplete, setIsLevelComplete] = useState(false);
@@ -12,7 +12,14 @@ export default function Level1() {
     const redCube = useRef()
     const blackCube = useRef()
     const blackCube2 = useRef();
+    // const {objects, ref} = useRapier()
 
+
+
+    // useFrame(() => {
+    //     objects?.length&& 
+    //     objects.forEach(object => console.log(object.body.position()))
+    // });
     const cubePositions = [
         [0, 4, 0],
         [-2, 2, 0], [2, 2, 0],
@@ -49,6 +56,10 @@ export default function Level1() {
         }
     };
 
+    const handleNextLevel = () => {
+        setLevel(prevLevel => prevLevel + 1);
+    }
+
     return (
         <>
             <Environment
@@ -67,9 +78,9 @@ export default function Level1() {
                 )
             ))}
 
-            <RigidBody ref={redCube} restitution={0.3}>
-                <mesh castShadow position={[0, 6, 0]} onClick={cubeJump}>
-                    <boxGeometry />
+            <RigidBody  restitution={0.2}>
+                <mesh castShadow position={[0, 6, 0]} ref={redCube} onClick={cubeJump}>
+                    <boxGeometry  />
                     <meshStandardMaterial color="red" metalness={1} roughness={0.1} />
                 </mesh>
             </RigidBody>
@@ -141,7 +152,7 @@ export default function Level1() {
                 <Float
                     speed={4}
                     floatIntensity={3}
-                // onClick={handleNextLevel}
+                onClick={handleNextLevel}
                 >
                     <Text
                         font="./fonts/bangers-v20-latin-regular.woff"
