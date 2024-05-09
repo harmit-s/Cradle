@@ -4,7 +4,6 @@ import { RigidBody } from '@react-three/rapier';
 
 export default function Level2() {
     const [showCubes, setShowCubes] = useState(Array(54).fill(true));
-    const [score, setScore] = useState(5000);
     const [isLevelComplete, setIsLevelComplete] = useState(false);
     const [clickCounter, setClickCounter] = useState(0);
     const purpleCube = useRef();
@@ -106,21 +105,6 @@ export default function Level2() {
                 Level 2: Dream
             </Text>
             </Float>
-
-            <Float
-                speed={4}
-                floatIntensity={3}>
-            <Text
-                font="./fonts/bangers-v20-latin-regular.woff"
-                fontSize={1}
-                color="indigo"
-                position={[10, 14, 0]}
-                textAlign="center"
-            >
-                Health Score: {score}
-            </Text>
-            </Float>
-
             
             {isLevelComplete && (
                 <Float

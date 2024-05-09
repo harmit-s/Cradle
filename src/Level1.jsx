@@ -3,23 +3,15 @@ import React, { useState, useRef } from 'react'
 import { RigidBody } from '@react-three/rapier'
 // import { useFrame } from '@react-three/fiber'
 
-
-export default function Level1({setLevel}) {
+export default function Level1( { setLevel, setScore } ) {
     const [showCubes, setShowCubes] = useState(Array(10).fill(true));
-    const [score, setScore] = useState(5000);
     const [isLevelComplete, setIsLevelComplete] = useState(false);
     const [clickCounter, setClickCounter] = useState(0);
     const redCube = useRef()
     const blackCube = useRef()
     const blackCube2 = useRef();
-    // const {objects, ref} = useRapier()
 
 
-
-    // useFrame(() => {
-    //     objects?.length&& 
-    //     objects.forEach(object => console.log(object.body.position()))
-    // });
     const cubePositions = [
         [0, 4, 0],
         [-2, 2, 0], [2, 2, 0],
@@ -78,8 +70,8 @@ export default function Level1({setLevel}) {
                 )
             ))}
 
-            <RigidBody  restitution={0.2}>
-                <mesh castShadow position={[0, 6, 0]} ref={redCube} onClick={cubeJump}>
+            <RigidBody ref={redCube} restitution={0.2}>
+                <mesh castShadow position={[0, 6, 0]} onClick={cubeJump}>
                     <boxGeometry  />
                     <meshStandardMaterial color="red" metalness={1} roughness={0.1} />
                 </mesh>
@@ -123,19 +115,6 @@ export default function Level1({setLevel}) {
             </Float>
 
             <Float
-                speed={4}
-                floatIntensity={3}>
-                <Text
-                    font="./fonts/bangers-v20-latin-regular.woff"
-                    fontSize={1}
-                    color="indigo"
-                    position-y={14}
-                    position-x={10}
-                    textAlign="right"
-                >Health Score: {score}  </Text>
-            </Float>
-
-            <Float
                 speed={2}
                 floatIntensity={3}>
                 <Text font="./fonts/bangers-v20-latin-regular.woff"
@@ -152,7 +131,7 @@ export default function Level1({setLevel}) {
                 <Float
                     speed={4}
                     floatIntensity={3}
-                onClick={handleNextLevel}
+                    onClick={handleNextLevel}
                 >
                     <Text
                         font="./fonts/bangers-v20-latin-regular.woff"
