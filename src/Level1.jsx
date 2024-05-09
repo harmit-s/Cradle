@@ -1,18 +1,17 @@
-import { Environment, MeshReflectorMaterial, Float, Text, OrbitControls } from '@react-three/drei'
-import React, { useState, useRef, useEffect } from 'react'
+import { Environment, MeshReflectorMaterial, Float, Text } from '@react-three/drei'
+import React, { useState, useRef } from 'react'
 import { RigidBody } from '@react-three/rapier'
-import { useHistory } from'react-router-dom';
+// import { useHistory } from 'react-router-dom';
 
 
 export default function Level1() {
     const [showCubes, setShowCubes] = useState(Array(10).fill(true));
     const [score, setScore] = useState(5000);
     const [isLevelComplete, setIsLevelComplete] = useState(false);
+    const [clickCounter, setClickCounter] = useState(0);
     const redCube = useRef()
     const blackCube = useRef()
     const blackCube2 = useRef();
-    const plane = useRef()
-    const history = useHistory();
 
     const cubePositions = [
         [0, 4, 0],
@@ -21,31 +20,6 @@ export default function Level1() {
         [-6, 0, 0], [-2, 0, 0], [2, 0, 0], [6, 0, 0],
     ];
 
-    useEffect(() => {
-        const checkCompletion = () => {
-            const redCubePosition = redCube.current.position;
-            const blackCubePosition = blackCube.current.position;
-            const blackCube2Position = blackCube2.current.position; 
-            const planePosition = plane.current.position;
-
-            
-            if (
-                redCubePosition.y >= blackCubePosition.y &&
-                blackCubePosition.y >= planePosition.y &&
-                redCubePosition.y >= blackCube2Position.y 
-            ) {
-                
-                setIsLevelComplete(true);
-            }
-        };
-        const intervalId = setInterval(checkCompletion, 100); 
-
-        return () => clearInterval(intervalId);
-    }, []);
-
-    const handleNextLevel = () => {
-        history.push('/levels/2.jsx', { score: score });
-    };
 
     const handleCubeClick = (index) => {
         setShowCubes(prevState => {
@@ -54,7 +28,9 @@ export default function Level1() {
             return newState;
         });
         setScore(prevScore => prevScore - 105);
+        setClickCounter(prevCounter => prevCounter + 1);
     };
+
 
     const cubeJump = () => {
         redCube.current.applyImpulse({ x: 2, y: 5, z: 0 });
@@ -65,7 +41,13 @@ export default function Level1() {
         });
         setScore(prevScore => prevScore - 300);
     };
-    
+
+
+    const checkLevelCompletion = () => {
+        if (!isLevelComplete && clickCounter >= 5) {
+            setIsLevelComplete(true);
+        }
+    };
 
     return (
         <>
@@ -73,8 +55,6 @@ export default function Level1() {
                 background
                 files={'./environments/landscape.hdr'}
             />
-
-            
 
             {showCubes.map((showCube, index) => (
                 showCube && (
@@ -108,7 +88,7 @@ export default function Level1() {
                 </mesh>
             </RigidBody>
 
-            <RigidBody ref={plane} type='fixed' restitution={0.5}>
+            <RigidBody type='fixed' restitution={0.5}>
                 <mesh position-y={-0.5} rotation-x={- Math.PI * 0.5} scale={20}>
                     <planeGeometry />
                     <MeshReflectorMaterial
@@ -144,21 +124,35 @@ export default function Level1() {
                 >Health Score: {score}  </Text>
             </Float>
 
+            <Float
+                speed={2}
+                floatIntensity={3}>
+                <Text font="./fonts/bangers-v20-latin-regular.woff"
+                    fontSize={1}
+                    color="black"
+                    position-y={7}
+                    position-x={-10}
+                    textAlign="right"
+                    onClick={checkLevelCompletion}
+                >CHECK </Text>
+            </Float>
+
             {isLevelComplete && (
                 <Float
-                speed={4}
-                floatIntensity={3}
-                onClick={handleNextLevel}>
-                <Text
-                    font="./fonts/bangers-v20-latin-regular.woff"
-                    fontSize={3}
-                    color="red"
-                    position-y={16}
-                    position-x={0}
-                    textAlign="right"
-                >Level Complete: NEXT </Text>
-            </Float>
-                    
+                    speed={4}
+                    floatIntensity={3}
+                // onClick={handleNextLevel}
+                >
+                    <Text
+                        font="./fonts/bangers-v20-latin-regular.woff"
+                        fontSize={3}
+                        color="green"
+                        position-y={16}
+                        position-x={0}
+                        textAlign="right"
+                    >Level Complete: NEXT </Text>
+                </Float>
+
             )}
         </>
     );

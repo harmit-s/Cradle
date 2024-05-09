@@ -1,9 +1,9 @@
-import { useLocation } from 'react-router-dom';
+// import { useLocation } from 'react-router-dom';
 
 export default function Level2() 
 {
-    const location = useLocation();
-    const score = location.state ? location.state.score : 0;
+    // const location = useLocation();
+    // const score = location.state ? location.state.score : 0;
 
     
 
@@ -11,7 +11,7 @@ export default function Level2()
         <>
             
 
-            <Float
+            {/* <Float
                 speed={4}
                 floatIntensity={3}>
                 <Text
@@ -35,7 +35,7 @@ export default function Level2()
                     position-x={10}
                     textAlign="right"
                 >Health Score: {score}  </Text>
-            </Float>
+            </Float> */}
         </>
     );
 }
