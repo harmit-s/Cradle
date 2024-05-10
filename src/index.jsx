@@ -9,10 +9,10 @@ root.render(
     
     <Canvas
         camera={{
-            fov: 70,
+            fov: 115,
             near:0.1,
-            far:200,
-            position: [3, 5, 12],
+            far:350,
+            position: [-1, 12, 18],
         }}
     >
         <Experience />

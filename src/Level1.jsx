@@ -11,7 +11,6 @@ export default function Level1( { setLevel, setScore } ) {
     const blackCube = useRef()
     const blackCube2 = useRef();
 
-
     const cubePositions = [
         [0, 4, 0],
         [-2, 2, 0], [2, 2, 0],
@@ -26,10 +25,10 @@ export default function Level1( { setLevel, setScore } ) {
             newState[index] = false;
             return newState;
         });
+
         setScore(prevScore => prevScore - 105);
         setClickCounter(prevCounter => prevCounter + 1);
     };
-
 
     const cubeJump = () => {
         redCube.current.applyImpulse({ x: 2, y: 5, z: 0 });
@@ -70,22 +69,22 @@ export default function Level1( { setLevel, setScore } ) {
                 )
             ))}
 
-            <RigidBody ref={redCube} restitution={0.2}>
-                <mesh castShadow position={[0, 6, 0]} onClick={cubeJump}>
+            <RigidBody ref={ redCube } restitution={0.2}>
+                <mesh castShadow position={[0, 6, 0]}  ref={ redCube } onClick={cubeJump}>
                     <boxGeometry  />
                     <meshStandardMaterial color="red" metalness={1} roughness={0.1} />
                 </mesh>
             </RigidBody>
 
             <RigidBody ref={blackCube} >
-                <mesh castShadow position={[1, 3, 0]} >
+                <mesh castShadow position={[1, 3, 0]} ref={blackCube} >
                     <boxGeometry />
                     <meshStandardMaterial color="black" metalness={1} roughness={0.1} />
                 </mesh>
             </RigidBody>
 
             <RigidBody ref={blackCube2} >
-                <mesh castShadow position={[-1, 3, 0]} >
+                <mesh castShadow position={[-1, 3, 0]} ref={blackCube2} >
                     <boxGeometry />
                     <meshStandardMaterial color="black" metalness={1} roughness={0.1} />
                 </mesh>
