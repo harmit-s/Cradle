@@ -2,7 +2,7 @@ import { Environment, MeshReflectorMaterial, Text, Float } from '@react-three/dr
 import React, { useState, useRef } from 'react';
 import { RigidBody } from '@react-three/rapier';
 
-export default function Level2({ setScore }) {
+export default function Level2({ setLevel, setScore }) {
     const [showCubes, setShowCubes] = useState(Array(6).fill(true));
     const [isLevelComplete, setIsLevelComplete] = useState(false);
     const [clickCounter, setClickCounter] = useState(0);
