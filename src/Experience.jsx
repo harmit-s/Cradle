@@ -3,6 +3,9 @@ import { Physics } from '@react-three/rapier'
 import { useState } from 'react'
 import Level1 from './Level1'
 import Level2 from './levels/2'
+import Level3 from './levels/3'
+import Level4 from './levels/4'
+import Level5 from './levels/5'
 
 export default function Experience() {
     const [level, setLevel] = useState(1)
@@ -21,7 +24,10 @@ export default function Experience() {
         <Physics debug>
 
           {level === 1 && <Level1 setLevel = {setLevel} setScore={setScore} />}
-          {level === 2 && <Level2 setLevel = {setLevel}  />}
+          {level === 2 && <Level2 setLevel = {setLevel} setScore={setScore}  />}
+          {level === 3 && <Level3 setLevel = {setLevel} setScore={setScore} />}
+          {level === 4 && <Level4 setLevel = {setLevel} setScore={setScore}  />}
+          {level === 5 && <Level5 setLevel = {setLevel} setScore={setScore} />}
             
           <Float
                 speed={4}
