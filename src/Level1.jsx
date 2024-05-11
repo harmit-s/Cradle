@@ -1,15 +1,12 @@
 import { Environment, MeshReflectorMaterial, Float, Text } from '@react-three/drei'
-import React, { useState, useRef } from 'react'
+import { useState, useRef } from 'react'
 import { RigidBody } from '@react-three/rapier'
-// import { useFrame } from '@react-three/fiber'
 
 export default function Level1( { setLevel, setScore } ) {
     const [showCubes, setShowCubes] = useState(Array(10).fill(true));
     const [isLevelComplete, setIsLevelComplete] = useState(false);
     const [clickCounter, setClickCounter] = useState(0);
-    const redCube = useRef()
-    const blackCube = useRef()
-    const blackCube2 = useRef();
+    const redCube = useRef();
 
     const cubePositions = [
         [0, 4, 0],
@@ -40,7 +37,6 @@ export default function Level1( { setLevel, setScore } ) {
         setScore(prevScore => prevScore - 300);
     };
 
-
     const checkLevelCompletion = () => {
         if (!isLevelComplete && clickCounter >= 5) {
             setIsLevelComplete(true);
@@ -55,7 +51,7 @@ export default function Level1( { setLevel, setScore } ) {
         <>
             <Environment
                 background
-                files={'./environments/landscape.hdr'}
+                files={'/environments/level1.jpg'}
             />
 
             {showCubes.map((showCube, index) => (
@@ -69,22 +65,22 @@ export default function Level1( { setLevel, setScore } ) {
                 )
             ))}
 
-            <RigidBody ref={ redCube } restitution={0.2}>
+            <RigidBody restitution={0.2}>
                 <mesh castShadow position={[0, 6, 0]}  ref={ redCube } onClick={cubeJump}>
                     <boxGeometry  />
                     <meshStandardMaterial color="red" metalness={1} roughness={0.1} />
                 </mesh>
             </RigidBody>
 
-            <RigidBody ref={blackCube} >
-                <mesh castShadow position={[1, 3, 0]} ref={blackCube} >
+            <RigidBody >
+                <mesh castShadow position={[1, 3, 0]} >
                     <boxGeometry />
                     <meshStandardMaterial color="black" metalness={1} roughness={0.1} />
                 </mesh>
             </RigidBody>
 
-            <RigidBody ref={blackCube2} >
-                <mesh castShadow position={[-1, 3, 0]} ref={blackCube2} >
+            <RigidBody >
+                <mesh castShadow position={[-1, 3, 0]} >
                     <boxGeometry />
                     <meshStandardMaterial color="black" metalness={1} roughness={0.1} />
                 </mesh>

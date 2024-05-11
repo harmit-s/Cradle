@@ -1,5 +1,5 @@
 import { Environment, MeshReflectorMaterial, Text, Float } from '@react-three/drei';
-import React, { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { RigidBody } from '@react-three/rapier';
 import { useFrame } from '@react-three/fiber';
 
@@ -8,7 +8,22 @@ export default function Level3({ setLevel, setScore }) {
     const [isLevelComplete, setIsLevelComplete] = useState(false);
     const [clickCounter, setClickCounter] = useState(0);
     const redCube = useRef();
+    const [enableFrameUpdate, setEnableFrameUpdate] = useState(true);
     
+    useEffect(() => {
+        if (clickCounter >= 3) {
+            setEnableFrameUpdate(false); 
+        }
+    }, [clickCounter]);
+
+    useFrame((state) => {
+        if (enableFrameUpdate) { 
+            const angle = state.clock.elapsedTime * 2
+            state.camera.position.x = Math.sin(angle) * 10;
+            state.camera.position.z = Math.cos(angle) * 10;
+            state.camera.lookAt(0, 1, 0);
+        }
+    });
 
     const handleCubeClick = (index) => {
         setShowCubes(prevState => {
@@ -42,21 +57,11 @@ export default function Level3({ setLevel, setScore }) {
         setLevel(prevLevel => prevLevel + 1);
     }
 
-
-    useFrame((state) =>
-        {
-            const angle = state.clock.elapsedTime * 1.75
-            state.camera.position.x = Math.sin(angle) * 10
-            state.camera.position.z = Math.cos(angle) * 10
-            state.camera.lookAt(0, 1, 0)
-        
-        })
-
     return (
         <>
             <Environment
                 background
-                files={'./environments/greenhouse.hdr'} />
+                files={'/environments/level3.jpg'} />
 
             <RigidBody type='fixed' >
                 <mesh position-y={0} rotation-x={- Math.PI * 0.5} scale={20}>
@@ -81,7 +86,7 @@ export default function Level3({ setLevel, setScore }) {
             ))}
 
             {[...Array(3).keys()].map(index => (
-                <RigidBody key={index} restitution={0.7} >
+                <RigidBody key={index} restitution={0.5} >
                     <mesh scale={1} position={cubePositions[index]} >
                         <boxGeometry />
                         <meshStandardMaterial color="black" metalness={1} roughness={0.1} />
@@ -89,7 +94,7 @@ export default function Level3({ setLevel, setScore }) {
                 </RigidBody>
             ))}
 
-            <RigidBody ref={redCube} restitution={1.3} >
+            <RigidBody ref={redCube} restitution={1.1} >
                 <mesh scale={.5} position={[-1, 11.3, 1]} >
                     <boxGeometry />
                     <meshStandardMaterial color="red" metalness={1} roughness={0.1} />

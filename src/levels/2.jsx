@@ -71,7 +71,7 @@ export default function Level2({ setLevel, setScore }) {
 
     return (
         <>
-            <Environment background files={'./environments/dream.hdr'} />
+            <Environment background files={'/environments/level2.jpg'} />
 
             {[...Array(52).keys()].map(index => (
                 <RigidBody type='fixed' key={index} >

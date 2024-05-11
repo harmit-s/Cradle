@@ -12,24 +12,37 @@ export default function Experience() {
     const [score, setScore] = useState(5000);
 
     const handleLevelComplete = (newScore) => {
-        setScore(newScore); 
-        setLevel(level + 1); 
-      };
+        setScore(newScore);
+        setLevel(level + 1);
+    };
+
+    const restartLevel = () => {
+        setLevel(level === 1 ? 0 : 1); 
+        setTimeout(() => {
+            setLevel(level);
+        }, 0)
+    }
+
+    const skipLevel = () => {
+        setScore(score - 1000);
+        setLevel(level + 1);
+    };
+
 
     return <>
-        
+
         <OrbitControls />
 
-        <ambientLight intensity={0.5} />
+        <ambientLight intensity={2} />
         <Physics debug>
 
-          {level === 1 && <Level1 setLevel = {setLevel} setScore={setScore} />}
-          {level === 2 && <Level2 setLevel = {setLevel} setScore={setScore}  />}
-          {level === 3 && <Level3 setLevel = {setLevel} setScore={setScore} />}
-          {level === 4 && <Level4 setLevel = {setLevel} setScore={setScore}  />}
-          {level === 5 && <Level5 setLevel = {setLevel} setScore={setScore} />}
-            
-          <Float
+            {level === 1 && <Level1 setLevel={setLevel} setScore={setScore} />}
+            {level === 2 && <Level2 setLevel={setLevel} setScore={setScore} />}
+            {level === 3 && <Level3 setLevel={setLevel} setScore={setScore} />}
+            {level === 4 && <Level4 setLevel={setLevel} setScore={setScore} />}
+            {level === 5 && <Level5 setLevel={setLevel} setScore={setScore} />}
+
+            <Float
                 speed={4}
                 floatIntensity={3}>
                 <Text
@@ -41,6 +54,24 @@ export default function Experience() {
                     textAlign="right"
                 >Health Score: {score}  </Text>
             </Float>
+
+                    <Text
+                        font="./fonts/bangers-v20-latin-regular.woff"
+                        fontSize={1}
+                        color="white"
+                        position-x={-20} 
+                        textAlign="center"
+                        onClick={restartLevel}
+                    >Restart Level</Text>
+                    <Text
+                        font="./fonts/bangers-v20-latin-regular.woff"
+                        fontSize={1}
+                        color="white"
+                        position={[-20, -3, 0]} 
+                        textAlign="center" 
+                        onClick={skipLevel} 
+                    >Skip Level (-1000)
+                    </Text>
 
         </Physics>
     </>
