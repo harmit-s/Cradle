@@ -1,6 +1,7 @@
-import { OrbitControls, Float, Text } from '@react-three/drei';
+import { OrbitControls, Float, Text, Sparkles } from '@react-three/drei';
 import { Physics } from '@react-three/rapier'
 import { useState } from 'react'
+import {Perf } from 'r3f-perf'
 import Level1 from './Level1'
 import Level2 from './levels/2'
 import Level3 from './levels/3'
@@ -30,6 +31,8 @@ export default function Experience() {
 
 
     return <>
+
+    <Perf />
 
         <OrbitControls />
 
@@ -72,6 +75,14 @@ export default function Experience() {
                         onClick={skipLevel} 
                     >Skip Level (-1000)
                     </Text>
+
+                    <Sparkles
+		        size={ 8 }
+                scale={ [ 20, 8, 20 ] }
+                position-y={ 2 }
+                speed={ 2 }
+                count={ 40 }
+            />
 
         </Physics>
     </>
