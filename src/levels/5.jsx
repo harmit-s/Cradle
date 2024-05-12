@@ -1,22 +1,47 @@
-import { RigidBody } from "@react-three/rapier";
 import { Environment, MeshReflectorMaterial, Float, Text } from '@react-three/drei'
-import { useState } from 'react';
+import { useState, useRef } from 'react'
+import { RigidBody } from '@react-three/rapier'
+// import { useFrame } from '@react-three/fiber'
+// import * as THREE from 'three'
 
 export default function Level5({ setLevel, setScore }) {
     const [isLevelComplete, setIsLevelComplete] = useState(false);
-    // const [clickCounter, setClickCounter] = useState(0);
-    // const [showCubes, setShowCubes] = useState(Array(7).fill(true));
+    const redCube = useRef();
+    const twister = useRef()
+    const [clickCounter, setClickCounter] = useState(0);
+    const [showCubes, setShowCubes] = useState(Array(5).fill(true));
 
-    // const handleCubeClick = (index) => {
-    //     setShowCubes(prevState => {
-    //         const newState = [...prevState];
-    //         newState[index] = false;
-    //         return newState;
-    //     });
+    const handleCubeClick = (index) => {
+        setShowCubes(prevState => {
+            const newState = [...prevState];
+            newState[index] = false;
+            return newState;
+        });
 
-    //     setScore(prevScore => prevScore - 105);
-    //     setClickCounter(prevCounter => prevCounter + 1);
-    // };
+        setScore(prevScore => prevScore - 105);
+        setClickCounter(prevCounter => prevCounter + 1);
+    };
+
+    const cubePositions = [
+        [-6.5, 1.65, 1],
+        [-6.5, 3.7, 1],
+        [-6.5, 5.75, 1],
+        [-1, 9.25, 1],
+        [5, 13, 1],
+        // [5, 10.75, .25],
+        // [0, 12.8, .25]
+    ];
+    const cubeScales = [
+        [5.5, 1, 4],
+        [5.5, 1, 4],
+        [5.5, 1, 4],
+        [18, .5, 4]
+        [5, 2.5, 5],
+        // [10, 1, 5],
+        // [4.5, 3, 5]
+    ];
+
+
 
 
     const handleNextLevel = () => {
@@ -33,7 +58,7 @@ export default function Level5({ setLevel, setScore }) {
             />
 
             <RigidBody type='fixed' >
-                <mesh castShadow position-y={-0.5} rotation-x={- Math.PI * 0.5} scale={25}>
+                <mesh position-y={0} rotation-x={- Math.PI * 0.5} scale={22}>
                     <planeGeometry />
                     <MeshReflectorMaterial
                         resolution={550}
@@ -41,6 +66,58 @@ export default function Level5({ setLevel, setScore }) {
                         color="lightblue" />
                 </mesh>
             </RigidBody>
+
+            <RigidBody type="fixed" restitution={0.2} ref={redCube}>
+                <mesh position={[0, 13, 0]} ref={redCube}>
+                    <boxGeometry />
+                    <meshStandardMaterial color="red" metalness={1} roughness={0.1} />
+                </mesh>
+            </RigidBody>
+
+            {showCubes.map((showCube, index) => (
+                showCube && (
+                    <RigidBody type="fixed" key={index} restitution={0.4}>
+                        <mesh
+                            castShadow
+                            position={cubePositions[index]}
+                            scale={cubeScales[index]}
+                            onClick={() => handleCubeClick(index)}
+                        >
+                            <boxGeometry />
+                            <meshStandardMaterial color="mediumpurple" metalness={.7} roughness={0.1} />
+                        </mesh>
+                    </RigidBody>
+                )
+            ))}
+
+            <RigidBody >
+                <mesh position={[-6, 4.7, 1]} scale={[9, .75, 4]}>
+                    <boxGeometry />
+                    <meshStandardMaterial color="black" />
+                </mesh>
+            </RigidBody>
+
+            <RigidBody restitution={0.2} >
+                <mesh  position={[-7, 2.25, 1]} scale={ [4, 1, 4 ] }>
+                    <boxGeometry  />
+                    <meshStandardMaterial color="white" />
+                </mesh>
+            </RigidBody>
+
+            <RigidBody type="fixed" restitution={0.2} >
+                <mesh position={[5, 3, 1]} scale={[1, 5.75, .5]} >
+                    <boxGeometry />
+                    <meshStandardMaterial color="black" />
+                </mesh>
+            </RigidBody>
+
+            <RigidBody position={[-7, 1, 1]} scale={[4, 1, 4]}>
+                <mesh >
+                    <boxGeometry />
+                    <meshStandardMaterial color="lightgreen" />
+                </mesh>
+            </RigidBody>
+
 
             <Float
                 speed={4}

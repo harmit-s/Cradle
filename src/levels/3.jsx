@@ -54,8 +54,7 @@ export default function Level3({ setLevel, setScore }) {
     const checkLevelCompletion = () => {
         const redCubePos = redCube.current.translation();
         
-        const redCubeY = Math.round(redCubePos.y * 10) / 10; 
-        // console.log(redCubeY)
+        const redCubeY = Math.round(redCubePos.y * 10) / 10;
     
         if (redCubeY === -3.9 && !isLevelComplete) {
             setIsLevelComplete(true);
