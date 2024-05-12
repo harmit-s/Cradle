@@ -1,131 +1,188 @@
 import { RigidBody } from "@react-three/rapier";
-// import { useRef } from "react"
+import { Environment, MeshReflectorMaterial, Float, Text } from '@react-three/drei'
+import { useState } from 'react';
 
 
-export default function Level4() {
+export default function Level4({ setLevel, setScore }) {
+    const [isLevelComplete, setIsLevelComplete] = useState(false);
+    const [clickCounter, setClickCounter] = useState(0);
+    const [showCubes, setShowCubes] = useState(Array(7).fill(true));
 
-    
+    const cubePositions = [
+        [3.5, 2.75, -0.2],
+        [-3.5, 2.75, -0.2],
+        [-2.5, 7.75, 0],
+        [2, 7.75, 0],
+        [-5, 10.75, .25],
+        [5, 10.75, .25],
+        [0, 12.8, .25]
+    ];
+    const cubeScales = [
+        [4, 5, 13],
+        [4, 5, 13],
+        [3, 3, 8],
+        [3, 3, 8],
+        [10, 1, 5],
+        [10, 1, 5],
+        [4.5, 3, 5]
+    ];
 
 
+    const handleCubeClick = (index) => {
+        setShowCubes(prevState => {
+            const newState = [...prevState];
+            newState[index] = false;
+            return newState;
+        });
+
+        setScore(prevScore => prevScore - 105);
+        setClickCounter(prevCounter => prevCounter + 1);
+    };
+
+    const checkLevelCompletion = () => {
+        if (!isLevelComplete && clickCounter >= 7) {
+            setIsLevelComplete(true);
+        }
+    };
+
+    const handleNextLevel = () => {
+        setLevel(prevLevel => prevLevel + 1);
+    }
 
     return (
         <>
+
+            <Environment
+                background
+                files={'/environments/level4.jpg'}
+            />
             <RigidBody type='fixed' >
-                <mesh castShadow position-y={-0.5} rotation-x={- Math.PI * 0.5} scale={30}>
+                <mesh castShadow position-y={-0.5} rotation-x={- Math.PI * 0.5} scale={35}>
                     <planeGeometry />
-                    <meshStandardMaterial
-                        color="darkgreen" />
+                    <MeshReflectorMaterial
+                        resolution={550}
+                        mirror={0.75}
+                        color="pink" />
                 </mesh>
             </RigidBody>
 
-            <RigidBody >
+            <RigidBody friction={0.4} >
                 <mesh castShadow position={[0, 0, 0]} scale={[16, .75, 14]}>
                     <boxGeometry />
-                    <meshStandardMaterial color="lightblue"  friction={0.1} />
+                    <meshStandardMaterial color="white" metalness={.7} roughness={0.1} />
                 </mesh>
             </RigidBody>
 
-            <RigidBody >
-                <mesh castShadow position={[3.5, 2.75, -.2]} scale={[4,5,13]}>
-                    <boxGeometry />
-                    <meshStandardMaterial color="mediumpurple" metalness={.5} roughness={0.1} restitution={0.4}  />
-                </mesh>
-            </RigidBody>
+            {showCubes.map((showCube, index) => (
+                showCube && (
+                    <RigidBody key={index} restitution={0.4}>
+                        <mesh
+                            castShadow
+                            position={cubePositions[index]}
+                            scale={cubeScales[index]}
+                            onClick={() => handleCubeClick(index)}
+                        >
+                            <boxGeometry />
+                            <meshStandardMaterial color="mediumpurple" metalness={.7} roughness={0.1} />
+                        </mesh>
+                    </RigidBody>
+                )
+            ))}
 
             <RigidBody >
-                <mesh castShadow position={[-3.5, 2.75, -.2]} scale={[4,5,13]}>
-                    <boxGeometry />
-                    <meshStandardMaterial color="mediumpurple" metalness={.5} roughness={0.1} restitution={0.4} />
-                </mesh>
-            </RigidBody>
-
-            <RigidBody >
-                <mesh castShadow position={[0, 5.75, -.2]} scale={[13,1,13]}>
+                <mesh castShadow position={[0, 5.75, -.2]} scale={[13, 1, 13]}>
                     <boxGeometry />
                     <meshStandardMaterial color="black" metalness={1} roughness={0.1} />
                 </mesh>
             </RigidBody>
 
-            <RigidBody >
-                <mesh castShadow position={[-2.5, 7.75, 0]} scale={[3,3, 8]}>
+
+
+            <RigidBody friction={0.1} >
+                <mesh castShadow position={[-0.25, 9.8, 0]} scale={[7.5, 1, 8]}>
                     <boxGeometry />
-                    <meshStandardMaterial color="mediumpurple"  />
+                    <meshStandardMaterial color="white" metalness={.7} roughness={0.1} />
                 </mesh>
             </RigidBody>
 
-            <RigidBody >
-                <mesh castShadow position={[2, 7.75, 0]} scale={[3,3,8]}>
+            <RigidBody restitution={0} >
+                <mesh castShadow position={[0, 15.5, .25]} scale={3}>
                     <boxGeometry />
-                    <meshStandardMaterial color="mediumpurple"  />
+                    <meshStandardMaterial color="black" metalness={.7} roughness={0.1} />
                 </mesh>
             </RigidBody>
 
-            <RigidBody >
-                <mesh castShadow position={[-0.25, 9.8, 0]} scale={[7.5,1,8]}>
+            <RigidBody restitution={0} >
+                <mesh castShadow position={[0, 18, .25]} scale={[6, .5, 3]} >
                     <boxGeometry />
-                    <meshStandardMaterial color="lightblue" friction={0.1} />
-                </mesh>
-            </RigidBody>
-
-            <RigidBody >
-                <mesh castShadow position={[-5, 10.75, .25]} scale={[10,1,5]}>
-                    <boxGeometry />
-                    <meshStandardMaterial color="mediumpurple"  />
+                    <meshStandardMaterial color="black" metalness={.7} roughness={0.1} />
                 </mesh>
             </RigidBody>
 
             <RigidBody >
-                <mesh castShadow position={[5, 10.75, .25]} scale={[10,1,5]}>
+                <mesh castShadow position={[0, 20, .25]} scale={1}>
                     <boxGeometry />
-                    <meshStandardMaterial color="mediumpurple"  />
+                    <meshStandardMaterial color="red" metalness={.7} roughness={0.1} />
                 </mesh>
             </RigidBody>
 
-            <RigidBody >
-                <mesh castShadow position={[0, 12.8, .25]} scale={[4.5,3,5]}>
-                    <boxGeometry />
-                    <meshStandardMaterial color="mediumpurple" />
+            <RigidBody restitution={2} colliders="ball" >
+                <mesh castShadow position={[-6.4, 13, .5]} scale={1.75}>
+                    <sphereGeometry args={[1, 16, 16]} />
+                    <meshStandardMaterial color="yellow" metalness={.7} roughness={0.1} />
                 </mesh>
             </RigidBody>
 
-            <RigidBody restitution={0.1} >
-                <mesh castShadow position={[0, 15.5, .25]} scale={2}>
-                    <boxGeometry />
-                    <meshStandardMaterial color="black" />
+            <RigidBody restitution={2} colliders="ball">
+                <mesh castShadow position={[6, 13, .5]} scale={1.75}>
+                    <sphereGeometry args={[1, 16, 16]} />
+                    <meshStandardMaterial color="yellow" metalness={.7} roughness={0.1} />
                 </mesh>
             </RigidBody>
 
-            <RigidBody restitution={0.1} >
-                <mesh castShadow position={[0, 17.5, .25]} scale={2} >
-                    <boxGeometry />
-                    <meshStandardMaterial color="black" />
-                </mesh>
-            </RigidBody>
+            <Float
+                speed={4}
+                floatIntensity={3}>
+                <Text
+                    font="./fonts/bangers-v20-latin-regular.woff"
+                    fontSize={1}
+                    color="darkblue"
+                    position-y={17}
+                    position-x={-12}
+                    textAlign="left"
+                >Level 4: Newtons Cradle </Text>
+            </Float>
 
-            <RigidBody restitution={0.1}  >
-                <mesh castShadow position={[0, 19, .25]} scale={1}>
-                    <boxGeometry />
-                    <meshStandardMaterial color="red" />
-                </mesh>
-            </RigidBody>
+            <Float
+                speed={2}
+                floatIntensity={3}>
+                <Text font="./fonts/bangers-v20-latin-regular.woff"
+                    fontSize={1}
+                    color="black"
+                    position-y={8}
+                    position-x={-12}
+                    textAlign="right"
+                    onClick={checkLevelCompletion}
+                >CHECK </Text>
+            </Float>
 
-            <RigidBody colliders="trimesh" >
-                <mesh castShadow position={[5, 14, 2.5]} scale={1}>
-                <torusKnotGeometry />
-                    <meshStandardMaterial color="white" metalness={.5} />
-                </mesh>
-            </RigidBody>
+            {isLevelComplete && (
+                <Float
+                    speed={4}
+                    floatIntensity={3}
+                    onClick={handleNextLevel}
+                >
+                    <Text
+                        font="./fonts/bangers-v20-latin-regular.woff"
+                        fontSize={3}
+                        color="green"
+                        position-y={19}
+                        position-x={0}
+                        textAlign="right"
+                    >Level Complete: NEXT </Text>
+                </Float>
 
-            <RigidBody colliders="trimesh" >
-                <mesh castShadow position={[-5, 14, 2.5]} scale={1}>
-                    <torusKnotGeometry />
-                    <meshStandardMaterial color="white" metalness={.5} />
-                </mesh>
-            </RigidBody>
-
-
-
-
+            )}
 
         </>
     )
