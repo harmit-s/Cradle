@@ -2,7 +2,7 @@ import { RigidBody } from "@react-three/rapier";
 import { Environment, MeshReflectorMaterial, Float, Text } from '@react-three/drei'
 import { useState } from 'react';
 
-export default function Level5({ setLevel, setScore }) {
+export default function Level6({ setLevel, setScore }) {
     const [isLevelComplete, setIsLevelComplete] = useState(false);
     const [clickCounter, setClickCounter] = useState(0);
     const [showCubes, setShowCubes] = useState(Array(7).fill(true));
@@ -34,7 +34,7 @@ export default function Level5({ setLevel, setScore }) {
 
             <Environment
                 background
-                files={'/environments/level5.jpg'}
+                files={'/environments/level6.jpg'}
             />
 
             <RigidBody type='fixed' >
@@ -43,7 +43,7 @@ export default function Level5({ setLevel, setScore }) {
                     <MeshReflectorMaterial
                         resolution={550}
                         mirror={0.75}
-                        color="lightblue" />
+                        color="blue" />
                 </mesh>
             </RigidBody>
 
@@ -57,7 +57,7 @@ export default function Level5({ setLevel, setScore }) {
                     position-y={15}
                     position-x={-12}
                     textAlign="left"
-                >Level 5: In a Time Lapse </Text>
+                >Level 6: Ewan </Text>
             </Float>
 
             <Float

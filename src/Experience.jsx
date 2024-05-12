@@ -7,6 +7,7 @@ import Level2 from './levels/2'
 import Level3 from './levels/3'
 import Level4 from './levels/4'
 import Level5 from './levels/5'
+import Level6 from './levels/6'
 
 export default function Experience() {
     const [level, setLevel] = useState(1)
@@ -44,6 +45,7 @@ export default function Experience() {
             {level === 3 && <Level3 setLevel={setLevel} setScore={setScore} />}
             {level === 4 && <Level4 setLevel={setLevel} setScore={setScore} />}
             {level === 5 && <Level5 setLevel={setLevel} setScore={setScore} />}
+            {level === 6 && <Level6 setLevel={setLevel} setScore={setScore} />}
 
             <Float
                 speed={4}
@@ -53,7 +55,7 @@ export default function Experience() {
                     fontSize={1}
                     color="indigo"
                     position-y={14}
-                    position-x={10}
+                    position-x={12}
                     textAlign="right"
                 >Health Score: {score}  </Text>
             </Float>

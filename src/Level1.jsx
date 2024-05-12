@@ -43,6 +43,8 @@ export default function Level1( { setLevel, setScore } ) {
         }
     };
 
+    //console.log(redCube.current.translation())
+
     const handleNextLevel = () => {
         setLevel(prevLevel => prevLevel + 1);
     }
