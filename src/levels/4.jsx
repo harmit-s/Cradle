@@ -1,12 +1,12 @@
 import { RigidBody } from "@react-three/rapier";
 import { Environment, MeshReflectorMaterial, Float, Text } from '@react-three/drei'
-import { useState } from 'react';
-
+import { useState, useRef, useEffect } from 'react';
 
 export default function Level4({ setLevel, setScore }) {
     const [isLevelComplete, setIsLevelComplete] = useState(false);
     const [clickCounter, setClickCounter] = useState(0);
     const [showCubes, setShowCubes] = useState(Array(7).fill(true));
+    const redCube = useRef();
 
     const cubePositions = [
         [3.5, 2.75, -0.2],
@@ -39,8 +39,16 @@ export default function Level4({ setLevel, setScore }) {
         setClickCounter(prevCounter => prevCounter + 1);
     };
 
+    useEffect(() => {
+        checkLevelCompletion();
+    }, []);
+
     const checkLevelCompletion = () => {
-        if (!isLevelComplete && clickCounter >= 7) {
+        const redCubePos = redCube.current.translation();
+        
+        const redCubeY = Math.round(redCubePos.y * 10) / 10;
+    
+        if (redCubeY === 6.2 && !isLevelComplete) {
             setIsLevelComplete(true);
         }
     };
@@ -119,8 +127,8 @@ export default function Level4({ setLevel, setScore }) {
                 </mesh>
             </RigidBody>
 
-            <RigidBody >
-                <mesh castShadow position={[0, 20, .25]} scale={1}>
+            <RigidBody ref={ redCube } >
+                <mesh castShadow position={[0, 20, .25]} ref={ redCube } scale={1}>
                     <boxGeometry />
                     <meshStandardMaterial color="red" metalness={.7} roughness={0.1} />
                 </mesh>
@@ -151,19 +159,6 @@ export default function Level4({ setLevel, setScore }) {
                     position-x={-12}
                     textAlign="left"
                 >Level 4: Newtons Cradle </Text>
-            </Float>
-
-            <Float
-                speed={2}
-                floatIntensity={3}>
-                <Text font="./fonts/bangers-v20-latin-regular.woff"
-                    fontSize={1}
-                    color="black"
-                    position-y={8}
-                    position-x={-12}
-                    textAlign="right"
-                    onClick={checkLevelCompletion}
-                >CHECK </Text>
             </Float>
 
             {isLevelComplete && (

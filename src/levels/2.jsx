@@ -1,5 +1,5 @@
 import { Environment, MeshReflectorMaterial, Text, Float } from '@react-three/drei';
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { RigidBody } from '@react-three/rapier';
 
 export default function Level2({ setLevel, setScore }) {
@@ -56,11 +56,19 @@ export default function Level2({ setLevel, setScore }) {
             return newState;
         });
         setScore(prevScore => prevScore - 105);
-        setClickCounter(prevCounter => prevCounter + 1);
+        setClickCounter(prevCounter => {
+            const newCounter = prevCounter + 1;
+            return newCounter;
+        });
+        checkLevelCompletion();
     };
 
+    useEffect(() => {
+        checkLevelCompletion();
+    }, [clickCounter]);
+
     const checkLevelCompletion = () => {
-        if (!isLevelComplete && clickCounter >= 5) {
+        if (clickCounter === 6) {
             setIsLevelComplete(true);
         }
     };
@@ -125,19 +133,6 @@ export default function Level2({ setLevel, setScore }) {
                 >
                     Level 2: Down the rabbit hole
                 </Text>
-            </Float>
-
-            <Float
-                speed={2}
-                floatIntensity={3}>
-                <Text font="./fonts/bangers-v20-latin-regular.woff"
-                    fontSize={1}
-                    color="black"
-                    position-y={7}
-                    position-x={-10}
-                    textAlign="right"
-                    onClick={checkLevelCompletion}
-                >CHECK </Text>
             </Float>
 
             {isLevelComplete && (

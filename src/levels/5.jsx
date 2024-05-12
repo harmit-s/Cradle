@@ -4,25 +4,20 @@ import { useState } from 'react';
 
 export default function Level5({ setLevel, setScore }) {
     const [isLevelComplete, setIsLevelComplete] = useState(false);
-    const [clickCounter, setClickCounter] = useState(0);
-    const [showCubes, setShowCubes] = useState(Array(7).fill(true));
+    // const [clickCounter, setClickCounter] = useState(0);
+    // const [showCubes, setShowCubes] = useState(Array(7).fill(true));
 
-    const handleCubeClick = (index) => {
-        setShowCubes(prevState => {
-            const newState = [...prevState];
-            newState[index] = false;
-            return newState;
-        });
+    // const handleCubeClick = (index) => {
+    //     setShowCubes(prevState => {
+    //         const newState = [...prevState];
+    //         newState[index] = false;
+    //         return newState;
+    //     });
 
-        setScore(prevScore => prevScore - 105);
-        setClickCounter(prevCounter => prevCounter + 1);
-    };
+    //     setScore(prevScore => prevScore - 105);
+    //     setClickCounter(prevCounter => prevCounter + 1);
+    // };
 
-    const checkLevelCompletion = () => {
-        if (!isLevelComplete && clickCounter >= 7) {
-            setIsLevelComplete(true);
-        }
-    };
 
     const handleNextLevel = () => {
         setLevel(prevLevel => prevLevel + 1);
@@ -58,19 +53,6 @@ export default function Level5({ setLevel, setScore }) {
                     position-x={-12}
                     textAlign="left"
                 >Level 5: In a Time Lapse </Text>
-            </Float>
-
-            <Float
-                speed={2}
-                floatIntensity={3}>
-                <Text font="./fonts/bangers-v20-latin-regular.woff"
-                    fontSize={1}
-                    color="black"
-                    position-y={8}
-                    position-x={-12}
-                    textAlign="right"
-                    onClick={checkLevelCompletion}
-                >CHECK </Text>
             </Float>
 
             {isLevelComplete && (

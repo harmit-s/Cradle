@@ -1,12 +1,15 @@
 import { Environment, MeshReflectorMaterial, Float, Text } from '@react-three/drei'
 import { useState, useRef } from 'react'
 import { RigidBody } from '@react-three/rapier'
+import { useFrame } from '@react-three/fiber'
 
 export default function Level1( { setLevel, setScore } ) {
     const [showCubes, setShowCubes] = useState(Array(10).fill(true));
     const [isLevelComplete, setIsLevelComplete] = useState(false);
     const [clickCounter, setClickCounter] = useState(0);
     const redCube = useRef();
+    const blackCube = useRef();
+    const blackCube2 = useRef();
 
     const cubePositions = [
         [0, 4, 0],
@@ -25,6 +28,7 @@ export default function Level1( { setLevel, setScore } ) {
 
         setScore(prevScore => prevScore - 105);
         setClickCounter(prevCounter => prevCounter + 1);
+        checkLevelCompletion();
     };
 
     const cubeJump = () => {
@@ -37,13 +41,24 @@ export default function Level1( { setLevel, setScore } ) {
         setScore(prevScore => prevScore - 300);
     };
 
+    useFrame(() => {
+        checkLevelCompletion();
+    }, []);
+
     const checkLevelCompletion = () => {
-        if (!isLevelComplete && clickCounter >= 5) {
+        const redCubePos = redCube.current.translation();
+        const blackCube1Pos = blackCube.current.translation();
+        const blackCube2Pos = blackCube2.current.translation();
+        
+        const redCubeY = Math.round(redCubePos.y * 100) / 100; 
+        const blackCube1Y = Math.round(blackCube1Pos.y * 100) / 100; 
+        const blackCube2Y = Math.round(blackCube2Pos.y * 100) / 100;
+    
+        if (redCubeY === -5.0 && (blackCube1Y === -3.0 || blackCube2Y === -3.0)) {
             setIsLevelComplete(true);
         }
     };
 
-    //console.log(redCube.current.translation())
 
     const handleNextLevel = () => {
         setLevel(prevLevel => prevLevel + 1);
@@ -67,22 +82,22 @@ export default function Level1( { setLevel, setScore } ) {
                 )
             ))}
 
-            <RigidBody restitution={0.2}>
+            <RigidBody restitution={0.2} ref={ redCube }>
                 <mesh castShadow position={[0, 6, 0]}  ref={ redCube } onClick={cubeJump}>
                     <boxGeometry  />
                     <meshStandardMaterial color="red" metalness={1} roughness={0.1} />
                 </mesh>
             </RigidBody>
 
-            <RigidBody >
-                <mesh castShadow position={[1, 3, 0]} >
+            <RigidBody ref={ blackCube } >
+                <mesh castShadow position={[1, 3, 0]} ref={ blackCube } >
                     <boxGeometry />
                     <meshStandardMaterial color="black" metalness={1} roughness={0.1} />
                 </mesh>
             </RigidBody>
 
-            <RigidBody >
-                <mesh castShadow position={[-1, 3, 0]} >
+            <RigidBody ref={ blackCube2 } >
+                <mesh castShadow position={[-1, 3, 0]} ref={ blackCube2 } >
                     <boxGeometry />
                     <meshStandardMaterial color="black" metalness={1} roughness={0.1} />
                 </mesh>
@@ -109,19 +124,6 @@ export default function Level1( { setLevel, setScore } ) {
                     position-x={-10}
                     textAlign="left"
                 >Level 1: A New Era </Text>
-            </Float>
-
-            <Float
-                speed={2}
-                floatIntensity={3}>
-                <Text font="./fonts/bangers-v20-latin-regular.woff"
-                    fontSize={1}
-                    color="black"
-                    position-y={7}
-                    position-x={-10}
-                    textAlign="right"
-                    onClick={checkLevelCompletion}
-                >CHECK </Text>
             </Float>
 
             {isLevelComplete && (

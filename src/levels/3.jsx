@@ -47,8 +47,17 @@ export default function Level3({ setLevel, setScore }) {
         [-1, 4.6, 1],
     ];
 
+    useFrame(() => {
+        checkLevelCompletion();
+    }, []);
+
     const checkLevelCompletion = () => {
-        if (!isLevelComplete && clickCounter >= 3) {
+        const redCubePos = redCube.current.translation();
+        
+        const redCubeY = Math.round(redCubePos.y * 10) / 10; 
+        // console.log(redCubeY)
+    
+        if (redCubeY === -3.9 && !isLevelComplete) {
             setIsLevelComplete(true);
         }
     };
@@ -127,19 +136,6 @@ export default function Level3({ setLevel, setScore }) {
                 >
                     Level 3: The Green Room
                 </Text>
-            </Float>
-
-            <Float
-                speed={2}
-                floatIntensity={3}>
-                <Text font="./fonts/bangers-v20-latin-regular.woff"
-                    fontSize={1}
-                    color="black"
-                    position-y={7}
-                    position-x={-10}
-                    textAlign="right"
-                    onClick={checkLevelCompletion}
-                >CHECK </Text>
             </Float>
 
             {isLevelComplete && (

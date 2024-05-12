@@ -3,30 +3,30 @@ import { Environment, MeshReflectorMaterial, Float, Text } from '@react-three/dr
 import { useState } from 'react';
 
 export default function Level6({ setLevel, setScore }) {
-    const [isLevelComplete, setIsLevelComplete] = useState(false);
-    const [clickCounter, setClickCounter] = useState(0);
-    const [showCubes, setShowCubes] = useState(Array(7).fill(true));
+    // const [isLevelComplete, setIsLevelComplete] = useState(false);
+    // const [clickCounter, setClickCounter] = useState(0);
+    // const [showCubes, setShowCubes] = useState(Array(7).fill(true));
 
-    const handleCubeClick = (index) => {
-        setShowCubes(prevState => {
-            const newState = [...prevState];
-            newState[index] = false;
-            return newState;
-        });
+    // const handleCubeClick = (index) => {
+    //     setShowCubes(prevState => {
+    //         const newState = [...prevState];
+    //         newState[index] = false;
+    //         return newState;
+    //     });
 
-        setScore(prevScore => prevScore - 105);
-        setClickCounter(prevCounter => prevCounter + 1);
-    };
+    //     setScore(prevScore => prevScore - 105);
+    //     setClickCounter(prevCounter => prevCounter + 1);
+    // };
 
-    const checkLevelCompletion = () => {
-        if (!isLevelComplete && clickCounter >= 7) {
-            setIsLevelComplete(true);
-        }
-    };
+    // const checkLevelCompletion = () => {
+    //     if (!isLevelComplete && clickCounter >= 7) {
+    //         setIsLevelComplete(true);
+    //     }
+    // };
 
-    const handleNextLevel = () => {
-        setLevel(prevLevel => prevLevel + 1);
-    }
+    // const handleNextLevel = () => {
+    //     setLevel(prevLevel => prevLevel + 1);
+    // }
 
 
     return (
@@ -57,7 +57,7 @@ export default function Level6({ setLevel, setScore }) {
                     position-y={15}
                     position-x={-12}
                     textAlign="left"
-                >Level 6: Ewan </Text>
+                >Level 6: Orbits </Text>
             </Float>
 
             <Float
@@ -86,7 +86,7 @@ export default function Level6({ setLevel, setScore }) {
                         position-y={19}
                         position-x={0}
                         textAlign="right"
-                    >Level Complete: NEXT </Text>
+                    >Level Complete: Final Score </Text>
                 </Float>
 
             )}
