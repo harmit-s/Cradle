@@ -1,8 +1,8 @@
 import { RigidBody } from "@react-three/rapier";
-import { MeshReflectorMaterial, Float, Text, useGLTF, Html } from '@react-three/drei'
+import { MeshReflectorMaterial, Float, Text, Html } from '@react-three/drei'
 import { useMemo, useRef, useState } from "react";
 import { useFrame } from "@react-three/fiber";
-import { CuboidCollider, InstancedRigidBodies, CylinderCollider } from '@react-three/rapier'
+import { CuboidCollider, InstancedRigidBodies } from '@react-three/rapier'
 import * as THREE from 'three'
 import '../style.css'
 
@@ -25,8 +25,6 @@ export default function Level6({ setLevel, setScore }) {
         const z = Math.sin(angle) * 2
         twister.current.setNextKinematicTranslation({ x: x, y: - 0.8, z: z })
     })
-
-    const hamburger = useGLTF('./hamburger.glb')
 
     const cubesCount = 100
     const instances = useMemo(() => {
@@ -90,11 +88,6 @@ export default function Level6({ setLevel, setScore }) {
                 </mesh>
             </RigidBody>
 
-            <RigidBody colliders={false} position={[1, 8, 1]}>
-                <primitive object={hamburger.scene} scale={0.5} />
-                <CylinderCollider args={[0.5, 1.25]} />
-            </RigidBody>
-
             <RigidBody
                 ref={twister}
                 position={[0, - 0.8, 0]}
@@ -150,7 +143,7 @@ export default function Level6({ setLevel, setScore }) {
                     position-y={-4}
                     position-x={-15}
                     textAlign="left"
-                    //add onclick after
+                    onClick={() => setLevel(0)}
                 >Home  </Text>
 
             <Float

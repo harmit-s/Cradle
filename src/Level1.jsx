@@ -6,7 +6,6 @@ import { useFrame } from '@react-three/fiber'
 export default function Level1( { setLevel, setScore } ) {
     const [showCubes, setShowCubes] = useState(Array(10).fill(true));
     const [isLevelComplete, setIsLevelComplete] = useState(false);
-    const [clickCounter, setClickCounter] = useState(0);
     const redCube = useRef();
     const blackCube = useRef();
     const blackCube2 = useRef();
@@ -27,7 +26,6 @@ export default function Level1( { setLevel, setScore } ) {
         });
 
         setScore(prevScore => prevScore - 105);
-        setClickCounter(prevCounter => prevCounter + 1);
         checkLevelCompletion();
     };
 

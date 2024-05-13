@@ -2,6 +2,7 @@ import { OrbitControls, Float, Text, Sparkles } from '@react-three/drei';
 import { Physics } from '@react-three/rapier'
 import { useState } from 'react'
 import { Perf } from 'r3f-perf'
+import Homepage from './Homepage'
 import Level1 from './Level1'
 import Level2 from './levels/2'
 import Level3 from './levels/3'
@@ -10,7 +11,7 @@ import Level5 from './levels/5'
 import Level6 from './levels/6'
 
 export default function Experience() {
-    const [level, setLevel] = useState(1)
+    const [level, setLevel] = useState(0)
     const [score, setScore] = useState(5000);
 
     const handleLevelComplete = (newScore) => {
@@ -30,6 +31,10 @@ export default function Experience() {
         setLevel(level + 1);
     };
 
+    const handleStartGame = () => {
+        setLevel(1); 
+    };
+
 
     return <>
 
@@ -39,7 +44,7 @@ export default function Experience() {
 
         <ambientLight intensity={2} />
         <Physics debug>
-
+            {level === 0 && <Homepage startGame={handleStartGame} />}
             {level === 1 && <Level1 setLevel={setLevel} setScore={setScore} />}
             {level === 2 && <Level2 setLevel={setLevel} setScore={setScore} />}
             {level === 3 && <Level3 setLevel={setLevel} setScore={setScore} />}
@@ -47,7 +52,7 @@ export default function Experience() {
             {level === 5 && <Level5 setLevel={setLevel} setScore={setScore} />}
             {level === 6 && <Level6 setLevel={setLevel} setScore={score} />}
 
-            {level <= 5 && (
+            {level >= 1 && level <= 5 && (
                 <Float
                     speed={4}
                     floatIntensity={3}>
@@ -62,16 +67,18 @@ export default function Experience() {
                 </Float>
             )}
 
-            <Text
-                font="./fonts/bangers-v20-latin-regular.woff"
-                fontSize={1}
-                color="white"
-                position-x={-20}
-                textAlign="center"
-                onClick={restartLevel}
-            >Restart Level</Text>
+            {level >= 1 && level <= 6 && (
+                <Text
+                    font="./fonts/bangers-v20-latin-regular.woff"
+                    fontSize={1}
+                    color="white"
+                    position-x={-20}
+                    textAlign="center"
+                    onClick={restartLevel}
+                >Restart Level</Text>
+            )}
 
-            {level <= 5 && (
+            {level  >= 1 && level <= 5 && (
                 <Text
                     font="./fonts/bangers-v20-latin-regular.woff"
                     fontSize={1}
