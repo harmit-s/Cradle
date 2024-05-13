@@ -1,10 +1,10 @@
 import { RigidBody } from "@react-three/rapier";
 import { Environment, MeshReflectorMaterial, Float, Text } from '@react-three/drei'
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef } from 'react';
+import { useFrame } from "@react-three/fiber";
 
-export default function Level4({ setLevel, setScore }) {
+export default function Level4( { setLevel, setScore } ) {
     const [isLevelComplete, setIsLevelComplete] = useState(false);
-    const [clickCounter, setClickCounter] = useState(0);
     const [showCubes, setShowCubes] = useState(Array(7).fill(true));
     const redCube = useRef();
 
@@ -27,19 +27,16 @@ export default function Level4({ setLevel, setScore }) {
         [4.5, 3, 5]
     ];
 
-
     const handleCubeClick = (index) => {
         setShowCubes(prevState => {
             const newState = [...prevState];
             newState[index] = false;
             return newState;
         });
-
         setScore(prevScore => prevScore - 105);
-        setClickCounter(prevCounter => prevCounter + 1);
     };
 
-    useEffect(() => {
+    useFrame(() => {
         checkLevelCompletion();
     }, []);
 
@@ -48,7 +45,7 @@ export default function Level4({ setLevel, setScore }) {
         
         const redCubeY = Math.round(redCubePos.y * 10) / 10;
     
-        if (redCubeY === 6.2 && !isLevelComplete) {
+        if (redCubeY === -14.3 && !isLevelComplete) {
             setIsLevelComplete(true);
         }
     };
@@ -115,13 +112,6 @@ export default function Level4({ setLevel, setScore }) {
 
             <RigidBody restitution={0} >
                 <mesh castShadow position={[0, 15.5, .25]} scale={3}>
-                    <boxGeometry />
-                    <meshStandardMaterial color="black" metalness={.7} roughness={0.1} />
-                </mesh>
-            </RigidBody>
-
-            <RigidBody restitution={0} >
-                <mesh castShadow position={[0, 18, .25]} scale={[6, .5, 3]} >
                     <boxGeometry />
                     <meshStandardMaterial color="black" metalness={.7} roughness={0.1} />
                 </mesh>
