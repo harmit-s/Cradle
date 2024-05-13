@@ -1,16 +1,16 @@
 import { RigidBody } from "@react-three/rapier";
 import { MeshReflectorMaterial, Float, Text, Html } from '@react-three/drei'
-import { useMemo, useRef, useState } from "react";
+import { useMemo, useRef } from "react";
 import { useFrame } from "@react-three/fiber";
 import { CuboidCollider, InstancedRigidBodies } from '@react-three/rapier'
 import * as THREE from 'three'
 import '../style.css'
+import axios from "axios";
 
 export default function Level6({ setLevel, setScore }) {
     const twister = useRef();
-    const [name, setName] = useState('');
-    const [submitting, setSubmitting] = useState(false);
 
+    const score = setScore
 
     useFrame((state) => {
         const time = state.clock.getElapsedTime()
@@ -48,32 +48,31 @@ export default function Level6({ setLevel, setScore }) {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        setSubmitting(true);
+
+        const form = event.target;
+        const name = form.name.value;
+
+        if (name === "") {
+            alert("You must fill out name");
+            return;
+        }
+
+        const playerData = {
+            name,
+            score,
+        };
         
         try {
-            
-            const response = await fetch('/api/leaderboard', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    name: name,
-                    score: score, 
-                }),
-            });
+            const response = await axios.post("http://localhost:8080/players", playerData); 
     
-            if (response.ok) {
-                console.log('Leaderboard data submitted successfully');
+            if (response.status === 201) {
+                alert('Leaderboard data submitted successfully');
             } else {
-                
-                console.error('Failed to submit leaderboard data');
+                alert('Failed to submit leaderboard data');
             }
         } catch (error) {
             console.error('Error submitting leaderboard data:', error);
         }
-    
-        setSubmitting(false);
     };
 
     return (
@@ -117,21 +116,18 @@ export default function Level6({ setLevel, setScore }) {
             <Html>
                 <div className="form" style={{ position: 'absolute', top: -200, right: -450 }}>
                     <form onSubmit={handleSubmit}>
-                    <h2 className="form__score">Final Score: {setScore} </h2>
+                    <h2 className="form__score">Final Score: {score} </h2>
                         <label className="form__name" htmlFor="name">Enter Player Name:</label><br />
                         <input
                             type="text"
                             id="name"
                             name="name"
-                            onChange={(e) => setName(e.target.value)}
                             placeholder="Your name here..."
                             required
                             className="form__input"
                         /> <br />
-                        <input type="hidden" name="score" value={setScore} />
-                        <button className="form__button" type="submit" disabled={submitting}>
-                            {submitting ? 'Submitting...' : 'Submit'}
-                        </button>
+                        <input type="hidden" name="score" value={score} />
+                        <button className="form__button" type="submit">Submit</button>
                     </form>
                 </div>
             </Html>

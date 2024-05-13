@@ -3,7 +3,7 @@ import { useState } from 'react'
 import './style.css'
 
 
-export default function Homepage( { startGame } ) {
+export default function Homepage( { leaderboard, startGame } ) {
     const { nodes } = useGLTF('./portal.glb')
     const [showInstructions, setShowInstructions] = useState(false);
 
@@ -79,6 +79,7 @@ export default function Homepage( { startGame } ) {
                 color="green"
                 position={[1, .5, .8]}
                 textAlign="right"
+                onClick={ leaderboard }
             >Leaderboard</Text>
         </Center>
 

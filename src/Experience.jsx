@@ -9,6 +9,7 @@ import Level3 from './levels/3'
 import Level4 from './levels/4'
 import Level5 from './levels/5'
 import Level6 from './levels/6'
+import Leaderboard from './Leaderboard';
 
 export default function Experience() {
     const [level, setLevel] = useState(0)
@@ -35,6 +36,10 @@ export default function Experience() {
         setLevel(1); 
     };
 
+    const leaderboardPage = () => {
+        setLevel(7);
+    }
+
 
     return <>
 
@@ -44,13 +49,14 @@ export default function Experience() {
 
         <ambientLight intensity={2} />
         <Physics debug>
-            {level === 0 && <Homepage startGame={handleStartGame} />}
+            {level === 0 && <Homepage startGame={handleStartGame} leaderboard={leaderboardPage} />}
             {level === 1 && <Level1 setLevel={setLevel} setScore={setScore} />}
             {level === 2 && <Level2 setLevel={setLevel} setScore={setScore} />}
             {level === 3 && <Level3 setLevel={setLevel} setScore={setScore} />}
             {level === 4 && <Level4 setLevel={setLevel} setScore={setScore} />}
             {level === 5 && <Level5 setLevel={setLevel} setScore={setScore} />}
             {level === 6 && <Level6 setLevel={setLevel} setScore={score} />}
+            {level === 7 && <Leaderboard setLevel={setLevel} />}
 
             {level >= 1 && level <= 5 && (
                 <Float
