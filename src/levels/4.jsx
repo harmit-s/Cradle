@@ -44,8 +44,9 @@ export default function Level4( { setLevel, setScore } ) {
         const redCubePos = redCube.current.translation();
         
         const redCubeY = Math.round(redCubePos.y * 10) / 10;
+        const redCubeX = Math.round(redCubePos.x * 1) / 1;
     
-        if (redCubeY === -14.3 && !isLevelComplete) {
+        if (redCubeY === -14.3 && (redCubeX >= -5 && redCubeX <= 5)) {
             setIsLevelComplete(true);
         }
     };

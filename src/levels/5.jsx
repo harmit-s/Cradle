@@ -45,9 +45,9 @@ export default function Level5({ setLevel, setScore }) {
     const checkLevelCompletion = () => {
         const redCubePos = redCube.current.translation();
         
-        const redCubeY = Math.round(redCubePos.y * 10) / 10;
+        const redCubeY = Math.round(redCubePos.y * 1) / 1;
     
-        if (redCubeY === -2 || 17 && isLevelComplete ) {
+        if (redCubeY === 17 && -2 ) {
             setIsLevelComplete(true);
         }
     };

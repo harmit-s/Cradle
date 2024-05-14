@@ -1,7 +1,6 @@
 import { OrbitControls, Float, Text, Sparkles } from '@react-three/drei';
 import { Physics } from '@react-three/rapier'
 import { useState } from 'react'
-import { Perf } from 'r3f-perf'
 import Homepage from './Homepage'
 import Level1 from './Level1'
 import Level2 from './levels/2'
@@ -42,8 +41,6 @@ export default function Experience() {
 
 
     return <>
-
-        <Perf />
 
         <OrbitControls />
 

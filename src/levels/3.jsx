@@ -55,12 +55,13 @@ export default function Level3({ setLevel, setScore }) {
         const redCubePos = redCube.current.translation();
         
         const redCubeY = Math.round(redCubePos.y * 10) / 10;
+        const redCubeX = Math.round(redCubePos.x * 1) / 1; 
     
-        if (redCubeY === -3.9 && !isLevelComplete) {
+        if (redCubeY === -3.9 && redCubeX === 0 || -0 ) {
             setIsLevelComplete(true);
-        }
+        } 
     };
-
+    
     const handleNextLevel = () => {
         setLevel(prevLevel => prevLevel + 1);
     }

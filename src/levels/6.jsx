@@ -67,6 +67,7 @@ export default function Level6({ setLevel, setScore }) {
     
             if (response.status === 201) {
                 alert('Leaderboard data submitted successfully');
+                setLevel(7)
             } else {
                 alert('Failed to submit leaderboard data');
             }
