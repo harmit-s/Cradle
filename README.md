@@ -33,7 +33,7 @@ off the platform or hit the platform. Our hero is
 delicate so each time it moves, it will weaken
 him - lowering your health score. Goal is to always get the Hero cube on the black cube and the black cube on the platform. 
 
-This is a javascript game developed using three.js library deployed in vite environment. 
+This is a javascript game developed using react-three-fiber (three.js) library deployed in vite environment. 
 
 ### Tech Stack
 
@@ -42,6 +42,7 @@ This is a javascript game developed using three.js library deployed in vite envi
 -three.js (Effects, Scenes, Cameras, Animation, 
 Lights, Shaders, Objects, Geometry and more)
 -VITE environment for deployment
+-node/express 
 
 ### APIs
 
@@ -49,7 +50,7 @@ no external APIs
 
 ### Sitemap
 
-Sitemap is on my excalidraw
+Sitemap is on excalidraw
 -Landing page: Will consist of 3 links: Leadsership board, how to play and Start game (directed to level 1)
 -Leadership baord page: to display the list of scores for everyone that has played the game
 -How to Play: instructions on how to play
@@ -58,15 +59,16 @@ Sitemap is on my excalidraw
 
 ### Mockups
 
-Mockup on my excalidraw
+Mockup on excalidraw
 
 ### Data
 
-Cradle does not rely on external data sources. However, it may include internal data structures for level configurations and player progress tracking using backend json file to persist the score/name on the leaderboard. 
+Cradle does not rely on external data sources. 
+Leaderboard data is persisted with player name and score using node/express.
 
 ### Endpoints
 
-1 post request(/leaderboard) to submit the player name/score.
+1 post request(/players) to submit the player name/score.
 
 ### Auth
 
