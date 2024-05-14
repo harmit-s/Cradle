@@ -43,7 +43,6 @@ export default function Experience() {
     return <>
 
         <OrbitControls />
-
         <ambientLight intensity={2} />
         <Physics debug>
             {level === 0 && <Homepage startGame={handleStartGame} leaderboard={leaderboardPage} />}

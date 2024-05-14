@@ -210,3 +210,20 @@ body,
     color: gold;
     margin: 1rem 0;
 }
+
+.music {
+    position: relative;
+}
+
+.music__container {
+    position: absolute;
+    top: -20rem;
+    left: -25rem;
+    display: flex;
+    flex-direction: column;
+    width: 4.7rem;
+}
+
+.music__img {
+    width: 3rem;
+}
