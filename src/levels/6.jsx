@@ -63,7 +63,7 @@ export default function Level6({ setLevel, setScore }) {
         };
         
         try {
-            const response = await axios.post("http://localhost:8080/players", playerData); 
+            const response = await axios.post("https://cradle-server.vercel.app", playerData); 
     
             if (response.status === 201) {
                 alert('Leaderboard data submitted successfully');

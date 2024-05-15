@@ -9,7 +9,7 @@ export default function Leaderboard( { setLevel } ) {
     useEffect(() => {
         const players = async () => {
             try {
-                const response = await axios.get("http://localhost:8080/players")
+                const response = await axios.get("https://cradle-server.vercel.app")
                 setPlayerList(response.data);
             }
             catch (error) {
