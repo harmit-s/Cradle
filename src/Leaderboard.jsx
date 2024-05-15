@@ -5,11 +5,10 @@ import './style.css'
 
 export default function Leaderboard( { setLevel } ) {
     const [playerList, setPlayerList] = useState([]);
-
     useEffect(() => {
         const players = async () => {
             try {
-                const response = await axios.get("https://cradle-server.vercel.app")
+                const response = await axios.get("https://cradle-server.vercel.app/")
                 setPlayerList(response.data);
             }
             catch (error) {
@@ -30,7 +29,7 @@ export default function Leaderboard( { setLevel } ) {
                     <h2 className="leaderboard__subtitle">Score</h2>
                     </div>
                     {playerList.map((player, index) => (
-                        <div className="leaderboard__players" key={index}>
+                        <div className="leaderboard__players" key={player.id}>
                             <p className="leaderboard__rank">{player.rank}.</p>
                             <h2 className="leaderboard__name">{player.name}</h2>
                             <p className="leaderboard__score">{player.score}</p>
