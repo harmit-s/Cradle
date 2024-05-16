@@ -1,6 +1,6 @@
 import { Center, useTexture, useGLTF, Float, Text, Html } from '@react-three/drei'
 import { useState } from 'react'
-import './style.css'
+import './style.scss'
 
 export default function Homepage({ leaderboard, startGame }) {
     const { nodes } = useGLTF('./portal.glb')
@@ -56,8 +56,7 @@ export default function Homepage({ leaderboard, startGame }) {
 
             {showInstructions && (
                 <Html>
-                    <div className="popup">
-                        <div className="popup__content">
+                        <div className="popup">
                             <h1 className='popup__title'>How to Play</h1>
                             <p>The <strong style={{ backgroundColor: 'red', padding: '2px' }}>RED</strong> hero cube will fall on to the puzzle
                                 when the level loads. Underneath our hero cube will be a
@@ -69,7 +68,6 @@ export default function Homepage({ leaderboard, startGame }) {
                                 get the Hero cube on a <strong style={{ backgroundColor: 'black', padding: '2px' }}>BLACK</strong> block and the black block on the platform. </p>
                             <button className='popup__button' onClick={() => setShowInstructions(false)}>Close</button>
                         </div>
-                    </div>
                 </Html>
             )}
 

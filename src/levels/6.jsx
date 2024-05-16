@@ -4,7 +4,7 @@ import { useMemo, useRef } from "react";
 import { useFrame } from "@react-three/fiber";
 import { CuboidCollider, InstancedRigidBodies } from '@react-three/rapier'
 import * as THREE from 'three'
-import '../style.css'
+import '../style.scss'
 import axios from "axios";
 
 export default function Level6({ setLevel, setScore }) {
@@ -115,7 +115,7 @@ export default function Level6({ setLevel, setScore }) {
             </InstancedRigidBodies>
 
             <Html>
-                <div className="form" style={{ position: 'absolute', top: -200, right: -450 }}>
+                <div className="form">
                     <form onSubmit={handleSubmit}>
                     <h2 className="form__score">Final Score: {score} </h2>
                         <label className="form__name" htmlFor="name">Enter Player Name:</label><br />

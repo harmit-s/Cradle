@@ -1,0 +1,301 @@
+@font-face {
+    font-family: 'game';
+    src: url('../public/fonts/bangers-v20-latin-regular.woff') format('woff');
+}
+
+@mixin desktop {
+    @media (min-width: 1280px) {
+        @content;
+    }
+}
+
+@mixin tablet {
+    @media (min-width: 768px) {
+        @content;
+    }
+}
+
+*,
+*::after,
+*::before {
+    box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background-image: radial-gradient(circle, #864bca 0%, #22363a 100%);
+    font-family: 'game', sans-serif, 'Bitstream Vera Sans';
+}
+
+.form {
+    position: absolute;
+    right: -45vw;
+    top: -46vh;
+    display: flex;
+    flex-direction: column;
+    background-color: rgb(16, 16, 112);
+    border: gold 5px solid;
+    border-radius: .625rem;
+    padding: 1rem;
+    align-items: center;
+    justify-content: center;
+
+    &__score {
+        color: orange;
+        margin: 0;
+        padding-bottom: 1.5rem;
+        text-align: center;
+        font-size: 1.1rem;
+        font-family: 'game';
+        font-weight: 300;
+    }
+
+    &__name {
+        color: orange;
+        text-align: center;
+        font-size: 1rem;
+        font-family: 'game';
+        font-weight: 300;
+    }
+
+    &__input {
+        width: 100%;
+        height: 2.5rem;
+        border: gold 2px solid;
+        border-radius: 5px;
+        outline: none;
+        font-size: 1rem;
+        font-family: 'game', sans-serif, 'Bitstream Vera Sans';
+        font-weight: 300;
+        margin: 1rem 0;
+        text-align: center;
+    }
+
+    &__button {
+        width: 100%;
+        height: 2.5rem;
+        border: gold 3px solid;
+        border-radius: 5px;
+        font-size: 1rem;
+        font-family: 'game', sans-serif, 'Bitstream Vera Sans';
+        font-weight: 300;
+        margin: 1rem 0;
+        text-align: center;
+        cursor: pointer;
+        margin-bottom: 4rem;
+
+        &:hover {
+            background-color: rgb(16, 16, 112);
+            color: gold;
+        }
+    }
+}
+
+.popup {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 1rem;
+    border-radius: 5px;
+    width: 60vw;
+    background-color: rgb(16, 16, 112);
+    border: gold 5px solid;
+    border-radius: .625rem;
+    color: orange;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: .75rem;
+    line-height: 1rem;
+    text-align: center;
+    animation: slide 500ms ease-out;
+    transition: transform 0.5s, display 0.5s, opacity 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
+
+    @include tablet {
+        font-size: 1rem;
+        line-height: 1.5rem;
+        padding: 1.5rem;
+    }
+
+    @include desktop {
+        font-size: 1.25rem;
+        line-height: 1.75rem;
+        padding: 2rem;
+        width: 50vw;
+    }
+
+    &__title {
+        margin-top: 1.5rem;
+        margin-bottom: 2rem;
+    }
+    
+    &__button {
+        width: 20vw;
+        height: 2.5rem;
+        border: gold 3px solid;
+        border-radius: 5px;
+        font-size: 1rem;
+        font-family: 'game', sans-serif, 'Bitstream Vera Sans';
+        font-weight: 300;
+        margin: 1rem 0;
+        text-align: center;
+        cursor: pointer;
+        font-family: 'Courier New', Courier, monospace;
+        font-weight: bold;
+        float: right;
+
+        &:hover {
+            background-color: rgb(16, 16, 112);
+            color: gold;
+        }
+    }
+    
+}
+
+@keyframes slide {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+
+.leaderboard {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 57vw;
+    background-color: ivory;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem 1rem 1rem 1rem;
+    border-radius: 10px;
+    animation: slide 500ms ease-out;
+    transition: transform 0.5s, display 0.5s, opacity 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
+    
+    @include tablet {
+        width: 50vw;
+        padding: 2rem;
+    }
+
+    @include desktop() {
+        width: 40vw;
+        padding: 2.5rem;
+    }
+
+    &__title {
+        font-size: 2.75rem;
+        color: orange;
+        font-weight: 500;
+        font-family: 'Courier New', Courier, monospace;
+        background-color: rgb(16, 16, 112);
+        border: 3px solid gold;
+        border-radius: 5px;
+        text-align: center;
+        padding: .5rem;
+        margin: 0;
+        @include tablet {
+            padding: 1rem;
+        }
+    }
+
+    &__name {
+        margin: 0;
+    }
+    
+    &__button {
+        width: 100%;
+        height: 2.5rem;
+        border: gold 3px solid;
+        border-radius: 5px;
+        font-size: 1rem;
+        font-family: 'game', sans-serif, 'Bitstream Vera Sans';
+        font-weight: 300;
+        margin: 1rem 0;
+        text-align: center;
+        cursor: pointer;
+        font-family: 'Courier New', Courier, monospace;
+        font-weight: 400;
+
+        @include tablet {
+            width: 40%;
+        }
+
+        &:hover {
+            background-color: rgb(16, 16, 112);
+            color: gold;
+        }
+    }
+    
+    &__players {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        justify-content: space-between;
+        font-family: 'Courier New', Courier, monospace;
+        font-size: .8rem;
+    }
+    
+    &__score {
+        font-weight: 600;
+        font-size: 1rem;
+        margin: 0;
+    }
+
+    &__rank {
+        font-size: 1rem;
+        margin: .75rem 0;
+
+        @include tablet {
+            font-size: 1.25rem;
+            margin: 1rem 0;
+        }
+    }
+    
+    &__sub {
+        display: flex;
+        width: 100%;
+        justify-content: space-between;
+        font-family: 'Courier New', Courier, monospace;
+        color: gold;
+        margin: 1rem 0;
+        font-size: .65rem;
+        gap: .5rem;
+        @include tablet {
+            font-size: 1rem;
+        }
+    }
+}
+
+.music {
+    position: absolute;
+    top: -45vh;
+    right: 28vw;
+    z-index: 100;
+
+    &__container {
+        display: flex;
+        flex-direction: column;
+        width: 4.7rem;
+        align-items: center;
+    }
+    
+    &__img {
+        width: 2.5rem;
+    }
+    
+    & input[type="range"] {
+        width: 6.25rem;
+    }
+}

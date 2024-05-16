@@ -1,7 +1,8 @@
 import { Html } from "@react-three/drei";
 import { useState } from 'react';
 import { useSound } from 'use-sound';
-import './style.css'
+import './style.scss'
+import { useEffect } from "react";
 
 function MusicPlayer() {
     const [isPlaying, setIsPlaying] = useState(false);
@@ -16,6 +17,12 @@ function MusicPlayer() {
     const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
     const [play, { pause, stop }] = useSound(tracks[currentTrackIndex], { volume });
 
+    useEffect(() => {
+        if (isPlaying) {
+            play();
+        }
+    }, [isPlaying, play]);
+
     const handlePlayPause = () => {
         if (isPlaying) {
             pause();
@@ -29,7 +36,6 @@ function MusicPlayer() {
         stop();
         const nextTrackIndex = (currentTrackIndex + 1) % tracks.length;
         setCurrentTrackIndex(nextTrackIndex);
-        play({ id: tracks[nextTrackIndex] });
         setIsPlaying(true);
     };
 
@@ -37,7 +43,6 @@ function MusicPlayer() {
         stop();
         const previousTrackIndex = (currentTrackIndex - 1 + tracks.length) % tracks.length;
         setCurrentTrackIndex(previousTrackIndex);
-        play({ id: tracks[previousTrackIndex] });
         setIsPlaying(true);
     };
 
@@ -46,8 +51,7 @@ function MusicPlayer() {
     };
 
     return (
-        <Html>
-            <div className="music">
+        <Html className="music">
             <div className="music__container">
                 <button onClick={handlePlayPause}>
                     {isPlaying ? <img className="music__img" src="/icons/pause.png" alt="pause" /> : <img src="/icons/play.png" alt="play" />}
@@ -68,7 +72,6 @@ function MusicPlayer() {
                     onMouseDown={(e) => e.stopPropagation()}
                     onTouchStart={(e) => e.stopPropagation()}
                 />
-            </div>
             </div>
         </Html>
     );
