@@ -70,7 +70,7 @@ export default function Level3({ setLevel, setScore }) {
         <>
             <Environment
                 background
-                files={'/environments/level3.jpg'} />
+                files={'/environments/level3.hdr'} />
 
             <RigidBody type='fixed' >
                 <mesh position-y={0} rotation-x={- Math.PI * 0.5} scale={20}>

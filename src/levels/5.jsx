@@ -61,7 +61,7 @@ export default function Level5({ setLevel, setScore }) {
 
             <Environment
                 background
-                files={'/environments/level5.jpg'}
+                files={'/environments/level5.hdr'}
             />
 
             <RigidBody type='fixed' >
