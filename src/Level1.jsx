@@ -66,7 +66,7 @@ export default function Level1( { setLevel, setScore } ) {
         <>
             <Environment
                 background
-                files={'/environments/level1.jpg'}
+                files={'/environments/compressed2.hdr'}
             />
 
             {showCubes.map((showCube, index) => (

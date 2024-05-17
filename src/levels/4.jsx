@@ -60,7 +60,7 @@ export default function Level4( { setLevel, setScore } ) {
 
             <Environment
                 background
-                files={'/environments/level4.jpg'}
+                files={'/environments/level4.hdr'}
             />
             <RigidBody type='fixed' >
                 <mesh castShadow position-y={-0.5} rotation-x={- Math.PI * 0.5} scale={35}>
