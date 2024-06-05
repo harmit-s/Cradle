@@ -73,6 +73,7 @@ function MusicPlayer() {
                     onTouchStart={(e) => e.stopPropagation()}
                 />
             </div>
+            <p className="music__link">Developed by: <a href="https://www.linkedin.com/in/harmitsidhu" target="_blank" rel="noopener noreferrer">Harmit Sidhu</a></p>
         </Html>
     );
 }

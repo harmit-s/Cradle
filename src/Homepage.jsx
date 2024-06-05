@@ -62,10 +62,7 @@ export default function Homepage({ leaderboard, startGame }) {
                                 when the level loads. Underneath our hero cube will be a
                                 series of <strong style={{ backgroundColor: 'mediumpurple', padding: '2px' }}>PURPLE</strong> blocks. Destroy the purple
                                 blocks by tapping on them without letting our hero fall
-                                off the platform or hit the platform. Each tap for the purple block will be -105 points. Our hero is
-                                delicate (so be careful), each time it moves, it will weaken
-                                our hero - lowering your health score. Goal is to
-                                get the Hero cube on a <strong style={{ backgroundColor: 'black', padding: '2px' }}>BLACK</strong> block and the black block on the platform. </p>
+                                off the platform or hit the platform. <strong>Goal</strong> is to get the <strong style={{ backgroundColor: 'red', padding: '2px' }}>Hero Cube</strong> on a <strong style={{ backgroundColor: 'black', padding: '2px' }}>BLACK</strong> block and the black block on the platform. </p>
                             <button className='popup__button' onClick={() => setShowInstructions(false)}>Close</button>
                         </div>
                 </Html>

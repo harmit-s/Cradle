@@ -63,7 +63,7 @@ export default function Level4( { setLevel, setScore } ) {
                 files={'/environments/level4.hdr'}
             />
             <RigidBody type='fixed' >
-                <mesh castShadow position-y={-0.5} rotation-x={- Math.PI * 0.5} scale={35}>
+                <mesh castShadow position-y={-0.5} rotation-x={- Math.PI * 0.5} scale={32}>
                     <planeGeometry />
                     <MeshReflectorMaterial
                         resolution={550}

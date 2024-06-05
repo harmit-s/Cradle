@@ -12,7 +12,7 @@ import Leaderboard from './Leaderboard';
 
 export default function Experience() {
     const [level, setLevel] = useState(0)
-    const [score, setScore] = useState(5000);
+    const [score, setScore] = useState(6000);
 
     const handleLevelComplete = (newScore) => {
         setScore(newScore);
@@ -73,8 +73,8 @@ export default function Experience() {
                 <Text
                     font="./fonts/bangers-v20-latin-regular.woff"
                     fontSize={1}
-                    color="white"
-                    position-x={-20}
+                    color="black"
+                    position-x={-22}
                     textAlign="center"
                     onClick={restartLevel}
                 >Restart Level</Text>
@@ -84,8 +84,8 @@ export default function Experience() {
                 <Text
                     font="./fonts/bangers-v20-latin-regular.woff"
                     fontSize={1}
-                    color="white"
-                    position={[-20, -3, 0]}
+                    color="red"
+                    position={[-22, -3, 0]}
                     textAlign="center"
                     onClick={skipLevel}
                 >Skip Level (-1000)
@@ -98,7 +98,6 @@ export default function Experience() {
                 speed={2}
                 count={40}
             />
-
         </Physics>
     </>
 }

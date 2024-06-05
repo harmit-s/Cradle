@@ -298,4 +298,16 @@ body,
     & input[type="range"] {
         width: 6.25rem;
     }
+
+    &__link a {
+        color: blue;
+        font-size: 1rem;
+        text-align: center;
+    }
+
+    &__link {
+        font-size: 1rem;
+        text-align: center;
+        margin-top: .25rem;
+    }
 }
